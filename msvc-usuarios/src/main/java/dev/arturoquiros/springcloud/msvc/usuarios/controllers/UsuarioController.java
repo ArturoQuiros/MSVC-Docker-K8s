@@ -53,5 +53,20 @@ public class UsuarioController {
     }
 
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminar (@PathVariable Long id){
+        Optional<Usuario> o = service.porId(id);
+
+        if (o.isPresent()){
+           service.eliminar(id);
+           return ResponseEntity.noContent().build();
+        }
+        return  ResponseEntity.notFound().build();
+    }
+
+
+
+
+
 
 }
