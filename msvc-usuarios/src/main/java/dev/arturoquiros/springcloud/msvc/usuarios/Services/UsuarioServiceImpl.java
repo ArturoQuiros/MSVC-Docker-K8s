@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @Service
-public class UsuarioServiceImpl implements UsuarioService {
+public class UsuarioServiceImpl implements UsuarioService{
 
     @Autowired
     private UsuarioRepository repository;
@@ -22,8 +22,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         return (List<Usuario>) repository.findAll();
     }
 
-    @Override
     @Transactional(readOnly = true)
+    @Override
     public Optional<Usuario> porId(Long id) {
         return repository.findById(id);
     }
@@ -37,6 +37,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional
     public void eliminar(Long id) {
-         repository.deleteById(id);
+        repository.deleteById(id);
     }
 }

@@ -17,56 +17,45 @@ public class UsuarioController {
     @Autowired
     private UsuarioService service;
 
-    @GetMapping
+    @GetMapping("/")
     public List<Usuario> listar() {
         return service.listar();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> detalle(@PathVariable Long id){
+    public ResponseEntity<?> detalle(@PathVariable Long id) {
         Optional<Usuario> usuarioOptional = service.porId(id);
-        if ( usuarioOptional.isPresent() ){
-            return  ResponseEntity.ok(usuarioOptional.get());
+        if (usuarioOptional.isPresent()) {
+            return ResponseEntity.ok(usuarioOptional.get());
         }
-        return  ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build();
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> crear (@RequestBody Usuario usuario){
-         return  ResponseEntity.status(HttpStatus.CREATED).body(service.guardar((usuario)));
+    @PostMapping("/")
+    public ResponseEntity<?> crear(@RequestBody Usuario usuario) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(usuario));
     }
 
     @PutMapping("/{id}")
-    public  ResponseEntity<?> editar (@RequestBody Usuario usuario, @PathVariable Long id){
+    public ResponseEntity<?> editar(@RequestBody Usuario usuario, @PathVariable Long id) {
         Optional<Usuario> o = service.porId(id);
-
-        if (o.isPresent()){
-            Usuario usuarioDB = o.get();
-            usuarioDB.setNombre(usuario.getNombre());
-            usuarioDB.setEmail(usuario.getEmail());
-            usuarioDB.setPassword(usuario.getPassword());
-            return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar((usuarioDB)));
+        if (o.isPresent()) {
+            Usuario usuarioDb = o.get();
+            usuarioDb.setNombre(usuario.getNombre());
+            usuarioDb.setEmail(usuario.getEmail());
+            usuarioDb.setPassword(usuario.getPassword());
+            return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(usuarioDb));
         }
-        return  ResponseEntity.notFound().build();
-
+        return ResponseEntity.notFound().build();
     }
-
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminar (@PathVariable Long id){
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         Optional<Usuario> o = service.porId(id);
-
-        if (o.isPresent()){
-           service.eliminar(id);
-           return ResponseEntity.noContent().build();
+        if (o.isPresent()) {
+            service.eliminar(id);
+            return ResponseEntity.noContent().build();
         }
-        return  ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build();
     }
-
-
-
-
-
-
 }
