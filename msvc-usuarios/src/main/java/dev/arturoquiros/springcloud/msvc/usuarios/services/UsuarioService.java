@@ -1,4 +1,4 @@
-package dev.arturoquiros.springcloud.msvc.usuarios.Services;
+package dev.arturoquiros.springcloud.msvc.usuarios.services;
 
 import dev.arturoquiros.springcloud.msvc.usuarios.models.entity.Usuario;
 

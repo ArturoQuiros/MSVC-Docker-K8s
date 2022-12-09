@@ -1,8 +1,7 @@
 package dev.arturoquiros.springcloud.msvc.usuarios.controllers;
 
-import dev.arturoquiros.springcloud.msvc.usuarios.Services.UsuarioService;
+import dev.arturoquiros.springcloud.msvc.usuarios.services.UsuarioService;
 import dev.arturoquiros.springcloud.msvc.usuarios.models.entity.Usuario;
-import feign.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
