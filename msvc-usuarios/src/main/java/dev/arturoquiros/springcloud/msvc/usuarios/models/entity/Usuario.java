@@ -2,6 +2,7 @@ package dev.arturoquiros.springcloud.msvc.usuarios.models.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
@@ -20,7 +21,7 @@ public class Usuario {
     @Email
     private String email;
 
-    @NotEmpty
+    @NotBlank
     private String password;
 
     public Long getId() {

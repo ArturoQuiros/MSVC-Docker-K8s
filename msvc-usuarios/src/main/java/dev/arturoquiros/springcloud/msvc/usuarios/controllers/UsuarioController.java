@@ -9,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class UsuarioController {
@@ -36,6 +33,11 @@ public class UsuarioController {
 
     @PostMapping("/")
     public ResponseEntity<?> crear(@Valid @RequestBody Usuario usuario, BindingResult result) {
+       if (service.porEmail(usuario.getEmail()).isPresent()){
+           return  ResponseEntity.badRequest().body(Collections.singletonMap("ErrorMessage", "Este email ya está registrado"));
+       }
+
+
         if (result.hasErrors()){
             return validar(result);
         }
@@ -47,6 +49,8 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<?> editar(@Valid @RequestBody Usuario usuario, BindingResult result, @PathVariable Long id) {
 
+
+
         if (result.hasErrors()){
             return validar(result);
         }
@@ -54,6 +58,11 @@ public class UsuarioController {
         Optional<Usuario> o = service.porId(id);
         if (o.isPresent()) {
             Usuario usuarioDb = o.get();
+
+            if (!usuario.getEmail().equalsIgnoreCase(usuarioDb.getEmail()) && service.porEmail(usuario.getEmail()).isPresent()){
+                return  ResponseEntity.badRequest().body(Collections.singletonMap("ErrorMessage", "Este email ya está registrado"));
+            }
+
             usuarioDb.setNombre(usuario.getNombre());
             usuarioDb.setEmail(usuario.getEmail());
             usuarioDb.setPassword(usuario.getPassword());
