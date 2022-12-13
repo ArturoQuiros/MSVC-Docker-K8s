@@ -33,7 +33,7 @@ public class UsuarioController {
 
     @PostMapping("/")
     public ResponseEntity<?> crear(@Valid @RequestBody Usuario usuario, BindingResult result) {
-       if (service.porEmail(usuario.getEmail()).isPresent()){
+       if (!usuario.getEmail().isEmpty() && service.porEmail(usuario.getEmail()).isPresent()){
            return  ResponseEntity.badRequest().body(Collections.singletonMap("ErrorMessage", "Este email ya está registrado"));
        }
 
@@ -59,7 +59,7 @@ public class UsuarioController {
         if (o.isPresent()) {
             Usuario usuarioDb = o.get();
 
-            if (!usuario.getEmail().equalsIgnoreCase(usuarioDb.getEmail()) && service.porEmail(usuario.getEmail()).isPresent()){
+            if (!usuario.getEmail().isEmpty() && !usuario.getEmail().equalsIgnoreCase(usuarioDb.getEmail()) && service.porEmail(usuario.getEmail()).isPresent()){
                 return  ResponseEntity.badRequest().body(Collections.singletonMap("ErrorMessage", "Este email ya está registrado"));
             }
 
