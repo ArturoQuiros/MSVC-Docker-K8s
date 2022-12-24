@@ -1,6 +1,7 @@
 package dev.arturoquiros.springcloud.msvc.cursos.models.entity;
 
 
+import dev.arturoquiros.springcloud.msvc.cursos.models.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -19,7 +20,11 @@ public class Curso {
     private String nombre;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "curso_id")
     private List<CursoUsuario> cursoUsuarios;
+
+    @Transient
+    private List<Usuario> usuarios;
 
     public Curso() {
         cursoUsuarios = new ArrayList<>();
