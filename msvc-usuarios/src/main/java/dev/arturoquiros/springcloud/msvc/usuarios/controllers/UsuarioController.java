@@ -83,10 +83,10 @@ public class UsuarioController {
     }
 
     @GetMapping("/usuarios-por-curso")
-    public ResponseEntity<?> obteneterAlumnosPorCurso(@RequestParam List<Long> ids) {
-
+    public ResponseEntity<?> obtenerAlumnosPorCurso(@RequestParam List<Long> ids){
         return ResponseEntity.ok(service.listarPorIds(ids));
     }
+
 
     private ResponseEntity<Map<String, String>> validar(BindingResult result) {
         Map<String, String> errores = new HashMap<>();

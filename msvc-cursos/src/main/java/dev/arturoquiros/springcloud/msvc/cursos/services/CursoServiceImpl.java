@@ -48,6 +48,12 @@ public class CursoServiceImpl implements  CursoService{
     }
 
     @Override
+    @Transactional
+    public void eliminarCursoUsuarioPorId(Long id) {
+        repository.eliminarCursoUsuarioPorId(id);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<Curso> porIdConUsuarios(Long id) {
 
