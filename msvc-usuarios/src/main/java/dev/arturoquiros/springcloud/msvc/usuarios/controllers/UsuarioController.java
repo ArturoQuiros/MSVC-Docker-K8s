@@ -31,7 +31,7 @@ public class UsuarioController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<?> crear(@Valid @RequestBody Usuario usuario, BindingResult result) {
 
         if (result.hasErrors()) {
