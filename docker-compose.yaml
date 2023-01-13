@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+
+  msvcs-cursos-postgresql-db:
+    image: postgres:14.3
+    container_name: msvcs-cursos-postgresql-db
+    networks:
+      - msvcs_network
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: msvc_cursos
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+  msvcs-users-mysql-db:
+    image: mysql:8.0
+    container_name: msvcs-users-mysql-db
+    networks:
+      - msvcs_network
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 12345
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: msvc_usuarios
+    volumes:
+      - ./mysql:/var/lib/mysql
+
+  msvc-usuarios:
+    image: msvc_usuarios
+    ports: 
+      - "8001:8001"
+    env_file:
+      - ./msvc-usuarios/.env
+    networks:
+      - msvcs_network
+    depends_on:
+      - msvcs-users-mysql-db
+    restart: always
+
+  msvc-cursos:
+    image: msvc_cursos
+    ports: 
+      - "8001:8001"
+    env_file:
+      - ./msvc-cursos/.env
+    networks:
+      - msvcs_network
+    depends_on:
+      - msvcs-cursos-postgresql-db
+    restart: always
+  
+networks:
+  msvcs_network:
+    external: true
+
+
