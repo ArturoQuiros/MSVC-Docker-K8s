@@ -1,15 +1,17 @@
 FROM openjdk:19-jdk-alpine3.16 as builder
 
+ARG MSVC_NAME=msvc-cursos
+
 WORKDIR /app/msvc-cursos
 
 COPY ./pom.xml /app
-COPY ./msvc-cursos/.mvn ./.mvn
-COPY ./msvc-cursos/mvnw .
-COPY ./msvc-cursos/pom.xml .
+COPY ./$MSVC_NAME/.mvn ./.mvn
+COPY ./$MSVC_NAME/mvnw .
+COPY ./$MSVC_NAME/pom.xml .
 
 RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
 #RUN ./mvnw dependency:go-offline
-COPY ./msvc-cursos/src ./src
+COPY ./$MSVC_NAME/src ./src
 
 RUN ./mvnw clean package -DskipTests
 
