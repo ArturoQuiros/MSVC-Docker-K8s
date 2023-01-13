@@ -2,7 +2,7 @@ version: '3'
 
 services:
 
-  msvcs-cursos-postgresql-db:
+  msvcs-users-postgresql-db:
     image: postgres:14.3
     container_name: msvcs-cursos-postgresql-db
     networks:
@@ -48,13 +48,13 @@ services:
   msvc-cursos:
     image: msvc_cursos
     ports: 
-      - "8001:8001"
+      - "8002:8002"
     env_file:
       - ./msvc-cursos/.env
     networks:
       - msvcs_network
     depends_on:
-      - msvcs-cursos-postgresql-db
+      - msvcs-users-postgresql-db
     restart: always
   
 networks:
