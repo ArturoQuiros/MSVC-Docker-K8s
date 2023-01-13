@@ -1,7 +1,6 @@
-version: '3'
+version: "3"
 
 services:
-
   msvcs-users-postgresql-db:
     image: postgres:14.3
     container_name: msvcs-cursos-postgresql-db
@@ -34,8 +33,12 @@ services:
       - ./mysql:/var/lib/mysql
 
   msvc-usuarios:
-    image: msvc_usuarios
-    ports: 
+    container_name: msvc_usuarios
+    image: fenixcr/usuarios
+    #    build:
+    #     context: ./
+    #     dockerfile: ./msvc-usuarios/Dockerfile
+    ports:
       - "8001:8001"
     env_file:
       - ./msvc-usuarios/.env
@@ -46,8 +49,12 @@ services:
     restart: always
 
   msvc-cursos:
-    image: msvc_cursos
-    ports: 
+    container_name: msvc_cursos
+    image: fenixcr/cursos
+    #    build:
+    #      context: ./
+    #      dockerfile: ./msvc-cursos/Dockerfile
+    ports:
       - "8002:8002"
     env_file:
       - ./msvc-cursos/.env
@@ -55,10 +62,9 @@ services:
       - msvcs_network
     depends_on:
       - msvcs-users-postgresql-db
+      - msvc-usuarios
     restart: always
-  
+
 networks:
   msvcs_network:
     external: true
-
-
