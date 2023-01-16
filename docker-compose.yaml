@@ -40,8 +40,10 @@ services:
     #     dockerfile: ./msvc-usuarios/Dockerfile
     ports:
       - "8001:8001"
-    env_file:
-      - ./msvc-usuarios/.env
+    # env_file:
+    #   - ./msvc-usuarios/.env
+    environment:
+      - PORT=8001
     networks:
       - msvcs_network
     depends_on:
@@ -56,8 +58,10 @@ services:
     #      dockerfile: ./msvc-cursos/Dockerfile
     ports:
       - "8002:8002"
-    env_file:
-      - ./msvc-cursos/.env
+    # env_file:
+    #   - ./msvc-cursos/.env
+    environment:
+      - PORT=8002
     networks:
       - msvcs_network
     depends_on:
